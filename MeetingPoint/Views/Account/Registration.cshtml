@@ -1,0 +1,71 @@
+﻿@{
+    Layout = null;
+    @model RegistrationModel;
+    ViewData["Title"] = "Регистрация";
+}
+
+@using MeetingPoint.Models.HtmlHelpers;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="~/css/auth.css" />
+    <script src="~/js/jquery-3.3.1.js"></script>
+    <script src="~/js/auth.js"></script>
+</head>
+<body>
+    <main class="auth">
+        <div class="auth_wrap">
+            <div class="inner">
+                <div class="auth_logo">
+                    <a href="~/Home/Index">MeetingPoint</a>
+                </div>
+                <form method="post" asp-controller="Account" asp-action="Registration" class="form_auth">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <div>
+                        <input type="text" asp-for="Login" placeholder="Логин" />
+                        <div class="auth_validation_wrap">
+                            <span asp-validation-for="Login"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="text" asp-for="Nickname" placeholder="Никнейм" />
+                        <div class="auth_validation_wrap">
+                            <span asp-validation-for="Nickname"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="password" asp-for="Password" placeholder="Пароль" />
+                        <div class="auth_validation_wrap">
+                            <span asp-validation-for="Password"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="password" asp-for="ConfirmPassword" placeholder="Подтвердите пароль" />
+                        <div class="auth_validation_wrap">
+                            <span asp-validation-for="ConfirmPassword"></span>
+                        </div>
+                    </div>
+                    <div class="avatar_select_wrap">
+                        @StandardAvatarImages.CreateStandardAvatarImagesList(Html)
+                    </div>
+                    <div>
+                        <input id="avatar_id" type="hidden" class="avatar_id_hidden" asp-for="Avatar" value="/images/user_avatar/m_1.png" />
+                    </div>
+                    <div>
+                        <input type="submit" value="Зарегистрироваться" class="button" style="margin-top: 15px">
+                    </div>
+                </form>
+                <div class="signup_link">
+                    <a href="~/Home/Index">На главную</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

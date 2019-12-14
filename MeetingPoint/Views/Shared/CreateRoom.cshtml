@@ -1,0 +1,54 @@
+﻿@model MeetingPoint.Models.CreateRoomModel
+@using MeetingPoint.Models.HtmlHelpers;
+
+<div class="create_room_modal_wrap">
+    <div class="create_room_modal">
+        <!--<form asp-controller="Lobby" asp-action="CreateRoom" data-ajax="true" data-ajax-success="callAlert()" data-ajax-failure="callError()">-->
+        <form asp-controller="Lobby" asp-action="CreateRoom" class="create_room_form" id="createroom">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="create_room_name">
+                <label asp-for="Name" class="create_room_label"></label>
+                <span asp-validation-for="Name" class="create_room_name_valid"></span>
+                <input asp-for="Name" class="create_room_input name" />
+            </div>
+            <div class="create_room_bottom_wrap clearfix">
+                <div class="create_room_dates">
+                    <div class="create_room_datefrom">
+                        <label asp-for="DateFrom" class="create_room_label"></label>
+                        <!--<span asp-validation-for="DateFrom" class="create_room_date_valid"></span>-->
+                        <input asp-for="DateFrom" class="create_room_input" type="text" value="" placeholder="@DateTime.Now.Date.ToShortDateString()" data-mask="00.00.0000" data-mask-clearifnotmatch="true" />
+                    </div>
+                    <div class="create_room_dateto">
+                        <label asp-for="DateTo" class="create_room_label"></label>
+                        <!--<span asp-validation-for="DateTo" class="create_room_date_valid"></span>-->
+                        <input asp-for="DateTo" class="create_room_input" type="text" value="" placeholder="@DateTime.Now.Date.AddDays(1).ToShortDateString()" data-mask="00.00.0000" data-mask-clearifnotmatch="true" />
+                    </div>
+                </div>
+                <div class="create_room_image">
+                    <!--<label asp-for="Image" class="create_room_label"></label>-->
+                    <input type="file" id="create_room_upload" style="display: none;" />
+                    <div class="room_create_image_preview" style="display: none;">
+                        <div class="create_image_preview_img"></div>
+                    </div>
+                    <!--<input asp-for="Image" class="create_room_input image" type="button" value="Выбрать"/>-->
+                    <span asp-validation-for="Image" class="create_room_image_valid"></span>
+                </div>
+            </div>
+            <div class="room_avatar_select_wrap">
+                @StandardRoomImages.CreateStandardRoomImagesList(Html)
+            </div>
+            <div>
+                <input id="room_image_value" type="hidden" class="room_image_id_hidden" asp-for="Image" value="/images/room_avatar/r_1.png" />
+            </div>
+            <div class="create_room_buttons">
+                <input type="submit" value="Создать" class="button" id="create_room_submit" />
+                <div class="room_add_cancel">Отмена</div>
+                <div class="create_room_loading"></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+

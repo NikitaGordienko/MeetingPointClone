@@ -1,0 +1,140 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<User> userManager
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <!-- Подключение стилей -->
+    <!--<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.1.1/css/bootstrap.min.css"
+          asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-fallback-test-class="sr-only"
+          asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        -->
+    <link rel="shortcut icon" href="~/images/meetingpoint.png" type="image/png">
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/jquery-ui.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/owl.theme.default.min.css" asp-append-version="true" />
+</head>
+
+
+<body>
+    <header>
+        <div class="header_wrap">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="Lobby" asp-action="Index">
+                    <div class="icon"><img src="/images/meetingpoint.png" alt=""></div>
+                    <div class="name">MeetingPoint</div>
+                </a>
+            }
+            else
+            {
+                <a asp-controller="Home" asp-action="Index">
+                    <div class="icon"><img src="/images/meetingpoint.png" alt=""></div>
+                    <div class="name">MeetingPoint</div>
+                </a>
+            }
+
+
+            <div class="header_auth">
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="header_user">
+                        @if (userManager.FindByNameAsync(User.Identity.Name).Result.Avatar == null)
+                        {
+                            <img src="~/images/user_avatar/default.png" alt="default" class="user-avatar-mini">
+                        }
+                        else
+                        {
+                            <img src="@userManager.FindByNameAsync(User.Identity.Name).Result.Avatar" alt="default" class="user-avatar-mini">
+                        }
+                    </div>
+                    <div class="user-profile-mini">@User.Identity.Name</div>
+
+                    <div class="user-profile-mini signin"><a asp-controller="Lobby" asp-action="Index">Лобби</a></div>
+                    <div class="user-log-out">
+                        <form method="post" asp-controller="Account" asp-action="Logout">
+                            <input type="submit" value="Выход" class="logout" />
+                        </form>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="signin"><a asp-controller="Account" asp-action="Login">Вход</a></div>
+                    <div class="signup"><a asp-controller="Account" asp-action="Registration">Регистрация</a></div>
+
+                }
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Подключение страницы -->
+    @RenderBody()
+
+
+    <footer>
+        <div class="footer_info">
+            <ul>
+                <li><a asp-controller="Home" asp-action="Index">Главная</a></li>
+                <li style="display: none;"><a href="#">Privacy Policy</a></li>
+                <li id="footer_credits" style="cursor: pointer;">Credits</li>
+            </ul>
+            <div class="footer_copyright">© 2018 Memes Club. Powered by literally no one.</div>
+            <!--<div class="credits">
+                User avatar icons made by <a href="https://www.flaticon.com/authors/monkik" title="monkik">monkik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+            </div>-->
+        </div>
+    </footer>
+
+    <div class="credits_wrap">
+        <div class="credits_modal_wrap">
+            <div class="credits_modal">
+                <div class="credits_close">
+                    <img src="/images/cross.png" alt="close" />
+                </div>
+                <div style="font-size: 24px;">Icons made by:</div>
+                <ul class="credits_list">
+                    <li><a href="https://www.freepik.com/" title="Freepik">Freepik</a></li>
+                    <li><a href="https://www.flaticon.com/authors/monkik" title="monkik">monkik</a></li>
+                    <li><a href="https://www.flaticon.com/authors/hadrien" title="Hadrien">Hadrien</a></li>
+                    <li><a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a></li>
+                    <li><a href="https://www.flaticon.com/authors/skyclick" title="Skyclick">Skyclick</a></li>
+                    <li><a href="https://www.flaticon.com/authors/vectors-market" title="Vectors Market">Vectors Market</a></li>
+                </ul>
+                <div style="font-size: 14px;">from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подключение скриптов -->
+    <!--<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js" asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+            asp-fallback-test="window.jQuery" crossorigin="anonymous" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+
+    </script>
+    <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/4.1.1/bootstrap.min.js" asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal" crossorigin="anonymous"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+
+    </script>-->
+    <script src="~/js/jquery-3.3.1.js"></script>
+
+    <!--<script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>-->
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/jquery.mask.js"></script>
+    <script src="~/js/jquery-ui.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full&lazy=true"></script>
+    <script src="~/js/script.js"></script>
+
+</body>
+
+</html>

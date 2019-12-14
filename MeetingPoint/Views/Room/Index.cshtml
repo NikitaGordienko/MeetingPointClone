@@ -1,0 +1,441 @@
+﻿@using System.Globalization;
+@inject ApplicationDbContext _context;
+@model UserRoom
+@{
+    ViewData["Title"] = "Комнаты";
+    string activeness = "";
+    string selected = "";
+    List<Interval> allIntervals;
+    List<Interval> userIntervals;
+    List<Interval> thisDayInterval;
+}
+@functions{
+    public static DateTime StartOfWeek(DateTime dt)
+    {
+        int diff = (7 + (dt.DayOfWeek - DayOfWeek.Monday)) % 7;
+        return dt.AddDays(-1 * diff).Date;
+    }
+    public static DateTime EndOfWeek(DateTime dt)
+    {
+        int diff = (7 + (dt.DayOfWeek - DayOfWeek.Monday)) % 7;
+        return dt.AddDays(-1 * diff + 6).Date;
+    }
+
+}
+
+<!--<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>-->
+
+<main class="inner">
+    <!-- Левая панель-->
+    <div class="panel">
+        <div class="room_list">
+
+
+            @foreach (var room in Model.User.UserRooms)
+            {
+
+                if (room == Model)
+                {
+                    activeness = "room_item active";
+
+                }
+                else
+                {
+                    activeness = "room_item";
+
+                }
+                <div class="@activeness" data-room=@room.Room.Id>
+
+                    <!-- После добавления картинки по умолчанию -->
+                    <div class="room_item_circle">
+                        @if (room.Room.Image == null)
+                        {
+                            <img src="~/images/room_avatar/default.png" alt="default">
+                        }
+                        else
+                        {
+                            <img src="@room.Room.Image" alt="default" />
+                        }
+                        <div class="room_tooltip_wrap">
+                            <div class="room_tooltip">@room.Room.Name</div>
+                        </div>
+                    </div>
+                    <!-- После добавления картинки по умолчанию -->
+                    <!-- До добавления картинки по умолчанию -->
+                    @*<div class="room_item_circle">
+                            <div class="room_tooltip_wrap">
+                                <div class="room_tooltip">@room.Room.Name</div>
+                            </div>
+                        </div>*@
+                    <!-- До добавления картинки по умолчанию -->
+
+
+                </div>
+            }
+            <div class="room_add">
+                <div class="room_add_button">
+                    <img src="/images/room_add.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Модальное окно создания комнаты -->
+    <div id="createroom" class="create_room_wrap">
+        @{await Html.RenderPartialAsync("CreateRoom", new CreateRoomModel());}
+    </div>
+    <!-- Модальное окно создания комнаты -->
+    <!-- /Левая панель -->
+    <!-- Комната-->
+    @foreach (var room in Model.User.UserRooms)
+    {
+        if (room == Model)
+        {
+            activeness = "room active";
+        }
+        else
+        {
+            activeness = "room";
+        }
+
+        // Определение ссылки-приглашения в комнату
+        string protocol = Url.ActionContext.HttpContext.Request.Scheme.ToString();
+        string host = Url.ActionContext.HttpContext.Request.Host.ToString();
+        string roomInviteLink = Url.Action("Invite", "Room", new { roomId = room.RoomId }, protocol, host);
+
+        <div class="@activeness" id="@room.Room.Id" data-calendarid="@room.Room.CalendarId">
+            <div class="room_info">
+                <div class="room_info_header">
+                    <div class="room_name" title="@room.Room.Name">@room.Room.Name</div>
+                    <div class="room_members_info">Участников: <span class="members_count">@room.Room.UserRooms.Count</span></div>
+                </div>
+                <div class="room_members clearfix">
+                    <!-- Общий календарь -->
+                    <div class="room_member calendar active" data-memberid="united">
+                        <div class="member_avatar_wrap">
+                            <div class="member_avatar">
+                                <img src="~/images/calendar_icon.png" alt="">
+                            </div>
+                        </div>
+                        <div class="member_info">
+                            <div class="member_name">Общий календарь</div>
+                        </div>
+                    </div>
+                    <!-- /Общий календарь -->
+                    @foreach (var guest in room.Room.UserRooms)
+                    {
+                        <div class="room_member" data-memberid="@guest.User.Id">
+                            <div class="member_avatar_wrap">
+                                <div class="member_avatar">
+                                    @if (guest.User.Avatar == null)
+                                    {
+                                        <img src="~/images/user_avatar/default.png" alt="default">
+                                    }
+                                    else
+                                    {
+                                        <img src="@guest.User.Avatar" alt="default">
+                                    }
+
+                                </div>
+                            </div>
+                            <div class="member_info">
+                                <div class="member_name" title="@guest.User.Nickname">@guest.User.Nickname</div>
+                                <div class="member_email">@guest.User.Email</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="room_invite_block">
+                    <div class="room_invite invite_button">Пригласить в комнату</div>
+                    <div class="invite_link_wrap clearfix">
+                        <input type="text" value="@roomInviteLink" class="invite_link" readonly />
+                        <div class="invite_link_copy">
+                            <img src="~/images/copy.png" alt="Copy" />
+                        </div>
+                    </div>
+                </div>
+                <div class="room_leave">Покинуть комнату</div>
+
+                <!-- Модальное окно подтверждения выхода из комнаты -->
+                <div class="room_leave_wrap">
+                    <div class="room_leave_modal_wrap">
+                        <div class="room_leave_modal">
+                            <form asp-action="Disconnect" asp-route-userId="@room.UserId" asp-route-roomId="@room.RoomId" class="form_room_leave">
+                                <div class="room_leave_question">Вы точно хотите покинуть комнату?</div>
+                                <div class="room_leave_buttons">
+                                    <button type="submit" class="room_leave_confirm">
+                                        Да
+                                    </button>
+                                    <div class="room_leave_cancel">Отмена</div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /Модальное окно подтверждения выхода из комнаты -->
+
+
+            </div>
+            <div class="room_inner">
+                <div class="room_tabs">
+                    <div class="room_tab_change">
+                        <!-- Смена вкладок -->
+                        <div class="tab_change_prev tab_change">
+                            <img src="/images/right_arrow.png" alt="">
+                        </div>
+                        <div class="tab_name"></div>
+                        <div class="tab_change_next tab_change">
+                            <img src="/images/right_arrow.png" alt="">
+                        </div>
+                    </div>
+                    @{
+                        System.Globalization.Calendar grigCal = new GregorianCalendar();
+                        DayOfWeek firstDay = DayOfWeek.Monday;
+                        var dateStart = room.Room.Calendar.DateFrom;
+                        var dateEnd = room.Room.Calendar.DateTo;
+                        CalendarWeekRule calendarRule = CalendarWeekRule.FirstFourDayWeek;
+                        // определяем номера недель, к которым принадлежат начальная и конечная дата календаря комнаты
+                        var weekStartNumber = grigCal.GetWeekOfYear(dateStart, calendarRule, firstDay);
+                        var weekEndNumber = grigCal.GetWeekOfYear(dateEnd, calendarRule, firstDay);
+                        // количество реальных календарных недель
+                        int weeksCount = 0;
+                        if (weekEndNumber < weekStartNumber)
+                        {
+                            var weeksFromNewYear = weekEndNumber;
+                            var weeksBeforeNewYear = 52 - weekStartNumber;
+                            weeksCount = weeksCount = weeksFromNewYear + weeksBeforeNewYear + 1;
+                            
+                        }
+                        else
+                        {
+                            weeksCount = weekEndNumber - weekStartNumber + 1;
+                        }
+
+                    }
+                    <div class="room_tab room_tab_calendar active" data-tabname="Календарь" data-tabnumber="1">
+                        <!-- общий календарь -->
+                        <div class="room_calendar active" data-calendarUserId="united" data-editable="false">
+                            @{
+                                var intervalsUsers = (
+                                    from ci in _context.CalculatedInterval
+                                    join ciu in _context.CalculatedIntervalUser on ci.Id equals ciu.CalculatedIntervalId
+                                    join u in _context.User on ciu.UserId equals u.Id
+                                    where ci.CalendarId == room.Room.CalendarId
+                                    select new { ci.Id, ci.DateFrom, ci.DateTo, u.Nickname }
+                                ).ToList();
+
+                                var matchedIntervals = (from iu in intervalsUsers
+                                                        group iu by new { iu.Id, iu.DateFrom, iu.DateTo }
+                                    into newIu
+                                                        select new { Id = newIu.Key.Id, DateFrom = newIu.Key.DateFrom, DateTo = newIu.Key.DateTo, UserCount = newIu.Count() }
+                                ).ToList();
+
+                            }
+                            <div class="calendar_panel">
+                                <div class="calendar_week_prev calendar_week_change">
+                                    <img src="/images/right_arrow.png" alt="">
+                                </div>
+                                <div class="calendar_week_next calendar_week_change">
+                                    <img src="/images/right_arrow.png" alt="">
+                                </div>
+                                <div class="calendar_week_current"></div>
+                            </div>
+                            <div class="calendar_weeks_wrap">
+                                @for (int i = 1; i < weeksCount + 1; i++)
+                                {
+                                    <div @Html.Raw(i == 1 ? "class='calendar_week active'" : "class='calendar_week'") data-weekdates="@StartOfWeek(room.Room.Calendar.DateFrom).AddDays((i - 1) * 7).ToShortDateString() - @EndOfWeek(room.Room.Calendar.DateFrom).AddDays((i - 1) * 7).ToShortDateString()" data-weekorder="@i">
+                                        <div class="calendar_hours">
+                                        </div>
+                                        <div class="calendar_timeline">
+                                            @for (int j = 0; j < 7; j++)
+                                            {
+                                                <div data-daydate="@StartOfWeek(room.Room.Calendar.DateFrom).AddDays((i-1)*7+j).ToShortDateString()" @Html.Raw(StartOfWeek(room.Room.Calendar.DateFrom).AddDays((i - 1) * 7 + j) < dateStart || StartOfWeek(room.Room.Calendar.DateFrom).AddDays((i - 1) * 7 + j) > dateEnd ? "class='calendar_timeline_day unavailable' data-daystatus='unavailable'" : "class='calendar_timeline_day' data-daystatus='available'")>
+                                                    <div class="calendar_timeline_day_info">
+                                                        <div class="calendar_timeline_day_data_wrap">
+                                                            <div class="calendar_timeline_day_number">
+                                                                @StartOfWeek(room.Room.Calendar.DateFrom).AddDays((i - 1) * 7 + j).Day
+                                                            </div>
+                                                            <div class="calendar_timeline_day_week">
+                                                                @StartOfWeek(room.Room.Calendar.DateFrom).AddDays((i - 1) * 7 + j).DayOfWeek
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @{
+                                                        string matched;
+                                                        List<string> userNicknames;
+                                                    }
+                                                    <div class="timeline_hour_cells">
+                                                        @for (int ii = 10; ii <= 23; ii++)
+                                                        {
+                                                            {
+                                                                matched = "";
+                                                                userNicknames = new List<string>();
+                                                            }
+                                                            foreach (var matchedInterval in matchedIntervals)
+                                                            {
+                                                                if (matchedInterval.DateFrom.ToShortDateString() == StartOfWeek(room.Room.Calendar.DateFrom).AddDays((i - 1) * 7 + j).ToShortDateString() && ii >= matchedInterval.DateFrom.Hour && (ii < matchedInterval.DateTo.Hour || matchedInterval.DateTo.Minute == 59) && matchedInterval.UserCount >= 2)
+                                                                {
+                                                                    if (ii == 23)
+                                                                    {
+                                                                        string endTime = ii + ":" + matchedInterval.DateTo.Minute;
+                                                                        if (endTime == "23:59")
+                                                                        {
+                                                                            if (matchedInterval.UserCount < room.Room.UserRooms.Count)
+                                                                            {
+                                                                                matched = "hour_matched";
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                matched = "hour_matched_gold";
+
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        if (matchedInterval.UserCount < room.Room.UserRooms.Count)
+                                                                        {
+                                                                            matched = "hour_matched";
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            matched = "hour_matched_gold";
+
+                                                                        }
+                                                                    }
+                                                                    // Список всех пользователей, которые отметили этот час
+                                                                    foreach (var item in intervalsUsers.FindAll(ui => ui.Id == matchedInterval.Id))
+                                                                    {
+                                                                        userNicknames.Add(item.Nickname);
+                                                                    }
+                                                                }
+
+                                                            }
+                                                            <div class="hour_cell @matched" data-hour="@ii">
+                                                                @foreach (var intervalUser in userNicknames)
+                                                                {
+                                                                    <div class="hour_cell_user">@intervalUser</div>
+                                                                }
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        @{
+                            allIntervals = room.Room.Calendar.Intervals.FindAll(u => u.CalendarId == room.Room.Calendar.Id);
+                        }
+                        @foreach (var guest in room.Room.UserRooms)
+                        {
+                            {
+                                userIntervals = allIntervals.FindAll(i => i.UserId == guest.UserId);
+                            }
+                            <div class="room_calendar" data-calendarUserId="@guest.User.Id" @Html.Raw(guest.User.Id == Model.User.Id ? "data-editable='true'" : "data-editable='false'")>
+                                <div class="calendar_panel">
+                                    <div class="calendar_week_prev calendar_week_change">
+                                        <img src="/images/right_arrow.png" alt="">
+                                    </div>
+                                    <div class="calendar_week_next calendar_week_change">
+                                        <img src="/images/right_arrow.png" alt="">
+                                    </div>
+                                    <div class="calendar_week_current"></div>
+                                    <!--<div class="calculate_calendar" style="display: none;">Показать выбранные часы</div>-->
+                                    @if (guest.User.Id == Model.User.Id)
+                                    {
+                                        <div class="calendar_clear">Очистить</div>
+                                        <div class="calendar_send">Подтвердить</div>
+                                    }
+                                </div>
+                                <div class="calendar_weeks_wrap">
+                                    @for (int i = 1; i < weeksCount + 1; i++)
+                                    {
+
+                                        <div @Html.Raw(i == 1 ? "class='calendar_week active'" : "class='calendar_week'") data-weekdates="@StartOfWeek(room.Room.Calendar.DateFrom).AddDays((i - 1) * 7).ToShortDateString() - @EndOfWeek(room.Room.Calendar.DateFrom).AddDays((i - 1) * 7).ToShortDateString()" data-weekorder="@i">
+                                            <div class="calendar_hours">
+                                            </div>
+                                            <div class="calendar_timeline">
+                                                @for (int j = 0; j < 7; j++)
+                                                {
+                                                    { thisDayInterval = userIntervals.FindAll(d => d.DateBegin.Date == StartOfWeek(room.Room.Calendar.DateFrom).AddDays((i - 1) * 7 + j).Date).ToList(); }
+                                                    <div data-daydate="@StartOfWeek(room.Room.Calendar.DateFrom).AddDays((i-1)*7+j).ToShortDateString()" @Html.Raw(StartOfWeek(room.Room.Calendar.DateFrom).AddDays((i - 1) * 7 + j) < dateStart || StartOfWeek(room.Room.Calendar.DateFrom).AddDays((i - 1) * 7 + j) > dateEnd ? "class='calendar_timeline_day unavailable' data-daystatus='unavailable'" : "class='calendar_timeline_day' data-daystatus='available'")>
+                                                        <div class="calendar_timeline_day_info">
+                                                            <div class="calendar_timeline_day_data_wrap">
+                                                                <div class="calendar_timeline_day_number">
+                                                                    @StartOfWeek(room.Room.Calendar.DateFrom).AddDays((i - 1) * 7 + j).Day
+                                                                </div>
+                                                                <div class="calendar_timeline_day_week">
+                                                                    @StartOfWeek(room.Room.Calendar.DateFrom).AddDays((i - 1) * 7 + j).DayOfWeek
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="timeline_hour_cells">
+                                                            @for (int ii = 10; ii <= 23; ii++)
+                                                            {
+                                                                { selected = ""; }
+                                                                @foreach (var interval in thisDayInterval)
+                                                                {
+                                                                    if (ii >= interval.DateBegin.Hour && (ii < interval.DateEnd.Hour || interval.DateEnd.Minute == 59))
+                                                                    {
+                                                                        if (ii == 23)
+                                                                        {
+                                                                            string endTime = ii + ":" + interval.DateEnd.Minute;
+                                                                            if (endTime == "23:59")
+                                                                            {
+                                                                                selected = "ui-selected";
+
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            selected = "ui-selected";
+                                                                        }
+
+                                                                    }
+                                                                }
+                                                                <div class="hour_cell @selected" data-hour="@ii"></div>
+
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="room_tab room_tab_map" data-tabname="Местоположение" data-tabnumber="2">
+                        <!-- вкладка с картой-->
+                        @{
+                            string roomMapId = "room_map_" + room.RoomId;
+                        }
+                        <div class="room_map" id="@roomMapId" style="width:100%; height: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <!-- /Комната-->
+</main>
+
+
+
+<!-- Модальное окно подтверждения записи интервалов -->
+<div class="intervals_confirm_wrap">
+    <div class="intervals_confirm_modal_wrap">
+        <div class="intervals_confirm_modal">Ваши изменения сохраняются<span class="loading_dot">.</span><span class="loading_dot">.</span><span class="loading_dot">.</span></div>
+    </div>
+</div>
+<!-- /Модальное окно подтверждения записи интервалов -->
+
+
+<!-- Элемент с информацией по пользователям, отметившим интервал -->
+<div class="interval_info"></div>
+<!-- /Элемент с информацией по пользователям, отметившим интервал -->

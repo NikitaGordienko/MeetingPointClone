@@ -1,0 +1,60 @@
+﻿@using System;
+@model User
+@{
+    ViewData["Title"] = "Лобби";
+    string[] months = (string[]) ViewData["months"];
+}
+
+<main class="inner">
+    <div class="lobby">
+        <h1>Ваши комнаты, @Model.Nickname</h1>
+        <div class="lobby_rooms">
+            <div class="lobby_rooms_list">
+                @foreach (var lobbyRooms in Model.UserRooms)
+                {
+                    // Передаем ссылку на комнату (для использования в RoomController)
+                    <a asp-action="Index" asp-controller="Room" asp-route-id="@lobbyRooms.RoomId">
+                        <div class="lobby_room">
+                            <div class="lobby_room_name">@lobbyRooms.Room.Name</div>
+                            @{ 
+                                var dayFrom = Int32.Parse(lobbyRooms.Room.Calendar.DateFrom.ToString().Substring(0, 2));
+                                var monthFrom = Int32.Parse(lobbyRooms.Room.Calendar.DateFrom.ToString().Substring(3, 2));
+                                var dayTo = Int32.Parse(lobbyRooms.Room.Calendar.DateTo.ToString().Substring(0, 2));
+                                var monthTo = Int32.Parse(lobbyRooms.Room.Calendar.DateTo.ToString().Substring(3, 2));
+                                var lobbyRoomDateFrom = dayFrom + " " + months[monthFrom - 1];
+                                var lobbyRoomDateTo = dayTo + " " + months[monthTo - 1];
+
+                            }
+                            <div class="lobby_room_date">@lobbyRoomDateFrom - @lobbyRoomDateTo</div>
+                            <div class="lobby_room_members_list">
+                                @foreach (var roomMembers in lobbyRooms.Room.UserRooms)
+                                {
+                                    // Перебираем участников каждой комнаты
+                                    var roomMember = roomMembers.User;
+                                    <div class="lobby_room_member" title="@roomMember.Nickname">
+                                        <img src="@roomMember.Avatar" alt="" />
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </a>
+                }    
+                @*TODO: Отрисовать пустое лобби*@
+                <!-- Вызов модального окна создания комнаты -->
+                <div id="start" class="lobby_add">
+                    <div class="lobby_add_button">
+                        <!--<a href="#createroom"><img src="~/images/room_add_b.png" alt="Добавить комнату"></a>-->
+                        <!--<img src="~/images/room_add_b.png" alt="Добавить комнату">-->
+                    </div>
+                </div>
+
+                <!-- Модальное окно создания комнаты -->
+                <div id="createroom" class="create_room_wrap">
+                    @{await Html.RenderPartialAsync("CreateRoom", new CreateRoomModel());}
+                </div>
+                <!-- Модальное окно создания комнаты -->
+                            
+            </div>
+        </div>
+    </div>
+</main>

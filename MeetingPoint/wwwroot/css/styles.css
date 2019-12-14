@@ -1,0 +1,1834 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,900&subset=cyrillic');
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:300,400,700&subset=cyrillic');
+
+*, *:after, *:before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Comfortaa', cursive;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary, div {
+    display: block;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img:not(.leaflet-tile) {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.clearfix {
+    overflow: auto;
+}
+
+    .clearfix:after {
+        display: table;
+        content: "";
+        clear: both;
+    }
+
+/* Кастомный скролл */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #444;
+    }
+
+/* /Кастомный скролл */
+
+
+/* Header */
+header {
+    position: relative;
+    z-index: 2;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    background: #1281c4;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+    header .hamburger {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        height: 36px;
+        width: 36px;
+        background: url(/images/hamb.png) center no-repeat;
+        background-size: 100%;
+        cursor: pointer;
+    }
+
+.header_wrap {
+    height: 100%;
+    padding: 6px 80px;
+}
+
+    .header_wrap .icon {
+        float: left;
+        ;
+        height: 100%;
+        /* line-height: 60px; */
+    }
+
+        .header_wrap .icon img {
+            width: 48px;
+            height: 48px;
+        }
+
+    .header_wrap .name {
+        float: left;
+        height: 100%;
+        font-size: 36px;
+        line-height: 48px;
+        text-transform: uppercase;
+        font-weight: 900;
+        color: #fff;
+        padding-left: 25px;
+    }
+
+.header_auth {
+    float: right;
+    height: 100%;
+}
+
+.header_auth .signin,
+.header_auth .signup {
+    display: inline-block;
+    line-height: 48px;
+    color: #fff;
+}
+
+    .header_auth .signin a,
+    .header_auth .signup a {
+        cursor: pointer;
+    }
+
+    .header_auth .signin a:hover,
+    .header_auth .signup a:hover {
+        opacity: 0.8;
+    }
+
+    .header_auth .user-profile-mini,
+    .header_auth .user-log-out {
+        float: left;
+        height: 100%;
+    }
+
+    .header_auth .user-profile-mini{
+        line-height: 50px;
+        color: #fff;
+        margin-right: 20px;
+    }
+
+    .header_auth .user-log-out form {
+        height: 100%;
+    }
+
+    .header_auth .logout {
+        height: 100%;
+        font-size: 16px;
+        font-weight: 900;
+        background: #1281c4;
+        color: #fff;
+        border: 2px solid #fff;
+        border-radius: 7px;
+        padding: 0 20px;
+        outline: none;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .header_wrap .logout:hover {
+        background: #fff;
+        color: #000;
+    }
+
+    .header_auth .header_user {
+        float: left;
+        width: 48px;
+        height: 100%;
+        text-align: center;
+        background: #fff;
+        border-radius: 50%;
+        margin-right: 10px;
+        padding-top: 5px;
+        overflow: hidden;
+    }
+
+.header_wrap .signin {
+    margin-right: 20px;
+}
+/* Header */
+
+
+/* Footer */
+footer {
+    /* position: absolute; */
+    height: 60px;
+    bottom: 0;
+    width: 100%;
+    background: #1281c4;
+}
+
+.footer_info {
+    padding: 20px 80px;
+}
+
+    .footer_info ul {
+        display: inline-block;
+    }
+
+        .footer_info ul li {
+            display: inline-block;
+            color: #fff;
+            margin-right: 15px;
+            height: 100%;
+        }
+
+            .footer_info ul li:hover {
+                opacity: 0.8;
+            }
+
+.footer_copyright {
+    /* display: inline-block; */
+    float: right;
+    color: #fff;
+}
+/* Footer */
+
+
+main {
+    position: relative;
+}
+
+.container {
+    width: 1280px;
+    margin: 0 auto;
+}
+
+/* Главная страница */
+main.index h1 {
+    font-size: 64px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    color: #1da1f2;
+    padding-top: 40px;
+}
+
+.index_cta {
+    position: relative;
+    padding: 40px 0;
+    text-align: center;
+}
+
+.index_cta:after {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 100px;
+    height: 2px;
+    margin-left: -50px;
+    background: #1da1f2;
+    content: "";
+
+}
+
+.index_cta_problem {
+    font-size: 30px;
+}
+
+.cta_gold {
+    background: #ffd700;
+}
+
+.index_cta_help {
+    font-size: 36px;
+    padding: 35px 0;
+}
+
+.index_cta_button {
+    width: 330px;
+    margin: auto;
+    font-size: 24px;
+    font-weight: 900;
+    background: #1281c4;
+    color: #fff;
+    border-radius: 7px;
+    padding: 15px;
+    cursor: pointer;
+}
+
+    .index_cta_button:hover {
+        background: #2691d2;
+    }
+
+
+
+.index_promo {
+    position: relative;
+    width: 100%;
+    height: 175px;
+    margin-top: 40px;
+}
+
+    .index_promo > div {
+        height: 100%;
+    }
+
+    .index_promo .promo_left {
+        width: 20%;
+        float: left;
+        text-align: center;
+    }
+
+    .index_promo .promo_right {
+        width: 80%;
+        float: right;
+        font-size: 42px;
+    }
+
+    .index_promo .promo_right a:hover {
+        text-decoration: underline;
+    }
+
+    .index_promo .promo_right_remark {
+        font-size: 12px;
+        color: #e80000;
+        padding-top: 20px;
+    }
+
+        .index_promo .promo_right span {
+            font-weight: 900;
+            text-transform: uppercase;
+            color: #1da1f2;
+        }
+
+.index_features {
+    position: relative;
+    padding-top: 80px;
+}
+
+    .index_features:before {
+        position: absolute;
+        left: 50%;
+        top: 40px;
+        width: 100px;
+        height: 2px;
+        margin-left: -50px;
+        background: #1da1f2;
+        content: "";
+    }
+
+main.index h2 {
+    font-size: 36px;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+    color: #1da1f2;
+}
+
+main.index .owl-carousel {
+    position: relative;
+    margin-top: 20px;
+    padding: 0 200px 70px;
+}
+
+    main.index .owl-carousel:after {
+        position: absolute;
+        left: 50%;
+        bottom: 35px;
+        width: 100px;
+        height: 2px;
+        margin-left: -50px;
+        background: #1da1f2;
+        content: "";
+    }
+
+.carou_wrap {
+    position: relative;
+}
+
+.owl-carousel .carou_item {
+    height: 500px;
+    font-size: 24px;
+    text-align: center;
+    color: #1da1f2;
+    /*border: 3px solid rgba(29,161,242,1);*/
+    border: 0px solid transparent;
+    border-radius: 10px;
+}
+
+    .owl-carousel .carou_item .carou_item_action {
+        padding-top: 23px;
+    }
+
+    .owl-carousel .carou_item .carou_item_img {
+        height: 450px;
+        padding-top: 20px;
+        overflow: hidden;
+    }
+
+        .owl-carousel .carou_item .carou_item_img img {
+            width: auto;
+            margin: auto;
+            border: 2px solid #1da1f2;
+        }
+
+    main.index .owl-theme .owl-dot {
+        outline: none;
+    }
+
+main.index .owl-theme .owl-dot.active span,
+main.index .owl-theme .owl-dot:hover span {
+    background: #1da1f2;
+    opacity: 1;
+}
+
+main.index .owl-theme .owl-dot span {
+    background: #1da1f2;
+    opacity: 0.2;
+}
+
+.carou_wrap .slider_arrow,
+.carou_wrap .slider_arrow {
+    position: absolute;
+    top: 205px;
+    width: 129px;
+    height: 154px;
+    background-size: 100%;
+    cursor: pointer;
+}
+
+    .carou_wrap .slider_arrow.left {
+        left: 0;
+        background: url(/images/arrow_l.png);
+    }
+
+    .carou_wrap .slider_arrow.right {
+        right: 0;
+        background: url(/images/arrow_r.png);
+    }
+
+
+.index_super {
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+
+.index_super_list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 50px;
+    position: relative;
+    padding: 40px 0;
+}
+
+.index_super_item {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+    .index_super_item:hover {
+        transform: scale(1.1);
+        transition: 0.3s;
+    }
+
+.index_super_item .super_item_name {
+    font-size: 30px;
+    font-weight: 900;
+    color: #1da1f2;
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+    .index_super_item .super_item_img {
+        text-align: center;
+    }
+
+
+/* /Главная страница */
+
+/* Login */
+main.auth {
+    width: 100%;
+    height: 100%;
+}
+
+    main.auth .login {
+        width: 200px;
+        height: 500px;
+        background: yellow;
+        margin: auto 0;
+    }
+
+.wrap {
+    width: 100%;
+    height: 100%;
+}
+
+    .wrap .login {
+        width: 200px;
+        height: 200px;
+        background: blue;
+        margin: auto;
+    }
+
+/* Login */
+
+
+/* Левая панель */
+
+main.inner {
+    height: calc(100vh - 120px);
+}
+
+    main.inner .panel {
+        position: fixed;
+        z-index: 1;
+        width: 80px;
+        height: calc(100vh - 120px);
+        background: #09507c;
+        left: 0;
+    }
+
+        main.inner .panel .room_list {
+            width: 100%;
+            height: 100%;
+        }
+
+        main.inner .panel .room_item {
+            position: relative;
+            height: 80px;
+            padding: 10px;
+        }
+
+            main.inner .panel .room_item.active {
+                background: #8bd3ff;
+                box-shadow: inset 0px 0px 10px rgba(0,0,0,0.5);
+            }
+
+            main.inner .panel .room_item .room_item_circle {
+                position: relative;
+                height: 60px;
+                width: 60px;
+                background: #fff;
+                text-align: center;
+                border-radius: 50%;
+                overflow: hidden;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+
+                main.inner .panel .room_item .room_item_circle img {
+                    padding: 5px 0;
+                }
+
+            main.inner .panel .room_item.active .room_item_circle {
+                border-radius: 20px;
+            }
+
+            main.inner .panel .room_item .room_item_circle:hover {
+                border-radius: 20px;
+                transition: 0.3s;
+                transition-timing-function: cubic-bezier(.42,1.12,.83,1.3);
+            }
+
+
+        main.inner .panel .room_tooltip_wrap {
+            visibility: hidden;
+            position: absolute;
+            left: 60px;
+            top: 18px;
+            max-width: 180px;
+            max-height: 24px;
+            padding-left: 10px;
+        }
+
+        main.inner .panel .room_item_circle:hover .room_tooltip_wrap {
+            visibility: visible;
+        }
+
+        main.inner .panel .room_tooltip_wrap:before {
+            position: absolute;
+            left: 0;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            border-right: 10px solid #000;
+            content: "";
+        }
+
+        main.inner .panel .room_tooltip {
+            position: relative;
+            background: #000;
+            color: #fff;
+            font-size: 12px;
+            padding: 5px;
+            padding-right: 8px;
+            border-radius: 0 6px 6px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px;
+        }
+
+.room_add {
+    width: 80px;
+    height: 80px;
+    padding: 10px;
+}
+
+.room_add_button {
+    height: 60px;
+    opacity: 0.7;
+}
+
+    .room_add_button img {
+        cursor: pointer;
+    }
+
+    .room_add_button:hover {
+        opacity: 1;
+    }
+/* /Левая панель */
+
+
+/* Комната */
+.room {
+    margin-left: 80px;
+    height: 100%;
+    background: #E5F5FF;
+    display: none;
+}
+
+    .room.active {
+        display: flex;
+    }
+
+.room_info {
+    float: left;
+    position: relative;
+    height: 100%;
+    width: 280px;
+    background: #8bd3ff;
+}
+
+.room_info_header {
+    height: 80px;
+    border-bottom: 2px dashed rgba(0,0,0,0.5);
+    padding: 0 15px;
+}
+
+.room_info .room_name {
+    /* padding-left: 10px; */
+    color: #000;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 46px;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.room_info .room_members_info,
+.room_info {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.room_member {
+    position: relative;
+    height: 80px;
+    cursor: pointer;
+}
+
+    .room_member:hover {
+        background: #b7e3ff;
+    }
+
+    .room_member.active {
+        background: #b7e3ff;
+    }
+
+.member_avatar_wrap {
+    float: left;
+    width: 80px;
+    height: 100%;
+    padding: 15px;
+}
+
+.member_avatar {
+    height: 50px;
+    background: #fff;
+    padding-top: 5px;
+    text-align: center;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.room_member.calendar .member_avatar {
+    border-radius: 0;
+    background: transparent;
+}
+
+.member_info {
+    display: table;
+    position: relative;
+    float: left;
+    height: 100%;
+}
+
+.member_name {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 24px;
+    font-weight: 400;
+    max-width: 200px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.room_member.calendar .member_name {
+    position: relative;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.member_email {
+    display: none;
+    font-size: 12px;
+    padding-left: 3px;
+    position: absolute;
+    bottom: 15px;
+}
+
+.member_color {
+    position: absolute;
+    top: 27px;
+    right: 10px;
+    width: 26px;
+    height: 26px;
+    border: 1px solid #222;
+    border-radius: 7px;
+}
+
+.room_leave, .room_invite {
+    width: 250px;
+    font-size: 18px;
+    background: #fff;
+    text-align: center;
+    margin: 10px auto;
+    padding: 10px 0;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 7px;
+    cursor: pointer;
+    transition: 0.4s;
+    user-select: none;
+}
+
+    .room_leave:hover, .room_invite:hover {
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        transition: 0.4s;
+    }
+
+.invite_link_wrap {
+    display: none;
+    position: relative;
+    width: 250px;
+    margin: auto;
+    margin-bottom: -10px; /**/
+    background: #fff;
+    border-radius: 7px;
+    /*border: 1px solid #09507c;*/
+}
+
+.invite_link {
+    float: left;
+    width: 208px;
+    font-size: 16px;
+    padding: 11px;
+    border-radius: 7px 0 0 7px;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-right: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    user-select: all;
+}
+
+.invite_link::selection {
+    color: limegreen;
+}
+
+.invite_link_copy {
+    float: left;
+    width: 42px;
+    height: 42px;
+    text-align: center;
+    padding: 10px;
+    background: #09507c;
+    cursor: pointer;
+}
+
+.room_leave {
+    background: #09507c;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.room_leave_wrap.active {
+    display: table;
+}
+
+.room_leave_wrap {
+    position: fixed;
+    display: none;
+    z-index: 20;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+}
+
+.room_leave_modal_wrap {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.room_leave_modal {
+    width: 270px;
+    margin: auto;
+    padding: 15px;
+    border-radius: 7px;
+    background: #fff;
+}
+
+.form_room_leave {
+    padding: 15px;
+    border: 2px dashed #e80000;
+}
+
+.room_leave_question {
+    font-size: 18px;
+    text-align: center;
+}
+
+.room_leave_buttons {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
+}
+
+.room_leave_confirm,
+.room_leave_cancel {
+    width: 48%;
+    background: #e80000;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+}
+
+.room_leave_confirm:hover {
+    background: #ca0000;
+}
+
+.room_leave_cancel {
+    border: 2px solid #e80000;
+    color: #e80000;
+    background: #fff;
+}
+
+.room_leave_cancel:hover {
+    color: #ca0000;
+}
+
+.room_inner {
+    flex: 1;
+    /* float: left; */
+    position: relative;
+    height: 100%;
+}
+
+.room_tabs {
+    height: 100%;
+}
+
+    .room_tabs .room_tab {
+        display: none; /* баг с тайлами карты */
+        position: relative;
+        height: calc(100% - 80px);
+    }
+
+    .room_tabs .room_tab.active {
+        display: block;
+    }
+
+.room_tab_change {
+    display: flex;
+    width: 100%;
+    height: 80px;
+    padding: 15px 25px;
+}
+
+    .room_tab_change > div {
+        height: 100%;
+        float: left;
+        border-radius: 7px;
+        background: #8bd3ff;
+        font-weight: 900;
+        text-align: center;
+        line-height: 50px; /* должно равняться высоте блока */
+    }
+
+.tab_change_prev, .tab_change_next {
+    font-size: 36px;
+    width: 50px;
+    /* background: url(/images/right_arrow.png); */
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+}
+
+    .tab_change_prev:hover, .tab_change_next:hover {
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        transition: 0.3s;
+    }
+
+    .tab_change_prev img, .tab_change_next img {
+        padding: 10px;
+    }
+
+    .tab_change_prev img {
+        transform: rotate(180deg);
+    }
+
+.tab_name {
+    flex: auto;
+    font-size: 24px;
+    margin: 0 25px;
+}
+
+
+
+.room_tab_calendar {
+    padding-bottom: 25px;
+}
+
+.room_tab_map,
+.room_tab_chat {
+    padding: 25px;
+    padding-top: 0;
+}
+
+.room_calendar {
+    display: none;
+    flex-direction: column;
+    position: relative;
+    width: calc(100% - 50px);
+    margin: auto;
+    height: 100%;
+    background: #fff;
+    border-radius: 7px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    transition: 0.5s;
+}
+
+    .room_calendar:hover {
+        box-shadow: 0 0 40px rgba(0,0,0,0.4);
+        transition: 0.5s;
+    }
+
+.room_calendar.active {
+    display: flex;
+}
+
+.calendar_panel {
+    height: 50px;
+    width: 100%;
+    /* border-bottom: 2px dashed rgba(0, 0, 0, 0.2); */
+    padding: 8px;
+}
+
+.calendar_week_change {
+    float: left;
+    height: 100%; /* = 38px*/
+    width: 34px;
+    border-radius: 7px;
+    background: #8bd3ff;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: 0.3s;
+}
+
+    .calendar_week_change:hover {
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .calendar_week_change.disabled {
+        background: #aaa;
+        opacity: 0.6;
+        pointer-events: none;
+    }
+
+    .calendar_week_prev img {
+        padding: 7px;
+        transform: rotate(-90deg);
+        cursor: pointer;
+    }
+    .calendar_week_next img {
+        padding: 7px;
+        transform: rotate(90deg);
+        cursor: pointer;
+    }
+
+.calendar_week_current {
+    float: left;
+    height: 100%;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 34px;
+    margin-left: 10px;
+}
+
+.calculate_calendar {
+    float: left;
+    height: 100%;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 38px;
+    padding: 0 15px;
+    margin-left: 50px;
+    background: #8bd3ff;
+    border: 2px solid black;
+    border-radius: 7px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+    .calculate_calendar:hover {
+        background: #fff;
+        transition: 0.2s;
+    }
+
+.calendar_clear,
+.calendar_send {
+    float: right;
+    height: 100%;
+    color: #1281c4;
+    border: 2px solid #1281c4;
+    border-radius: 7px;
+    line-height: 30px; /* 100% - 4px border'a */
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+.calendar_send {
+    font-weight: 900;
+    color: #fff;
+    background: #1281c4;
+    margin-right: 15px;
+}
+
+    .calendar_clear:hover,
+    .calendar_send:hover {
+        text-decoration: underline;
+    }
+
+
+.calendar_weeks_wrap {
+    flex: 1;
+    flex-grow: 1;
+}
+
+.calendar_week {
+    display: none;
+    /* display: flex; */
+    flex-direction: column;
+    height: 100%;
+}
+
+.calendar_week.active {
+    display: flex;
+    /* flex-direction: column; */
+    /* height: 100%; */
+}
+
+.calendar_hours {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr); /* 15, если с 10:00 до 24:00 */
+    height: 20px;
+    padding-left: 100px;
+}
+
+.calendar_hour {
+    font-size: 12px;
+    text-align: center;
+}
+
+.calendar_timeline {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    /* margin-right: 25px; */
+}
+
+.calendar_timeline_day {
+    display: flex;
+    flex: 1;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.calendar_timeline_day_info {
+    position: relative;
+    display: table;
+    width: 100px;
+    height: 100%;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    /* padding: 15px; */
+}
+
+.calendar_timeline_day_data_wrap {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.calendar_timeline_day.unavailable .calendar_timeline_day_data_wrap {
+    opacity: 0.4;
+}
+
+.calendar_timeline_day_number {
+    font-size: 36px;
+    font-weight: 900;
+    text-align: center;
+}
+
+.calendar_timeline_day_week {
+    font-size: 12px;
+    text-align: center;
+}
+
+.timeline_hour_cells {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    cursor: pointer;
+}
+
+.calendar_timeline_day.unavailable .timeline_hour_cells {
+    cursor: auto;
+    background: rgba(0,0,0,0.08);
+}
+
+.hour_cell {
+    position: relative;
+    border-right: 1px dashed rgba(0, 0, 0, 0.2);
+}
+
+.hour_cell:last-child {
+    border-right-color: transparent;
+}
+
+.calendar_timeline_day:nth-child(1) .hour_cell:before {
+    position: absolute;
+    top: -18px;
+    left: -15px;
+    content: "";
+    font-size: 12px;
+}
+
+.calendar_timeline_day:nth-child(1) .hour_cell:nth-child(1):before {
+    content: "10:00";
+}
+
+.calendar_timeline_day:nth-child(1) .hour_cell:nth-child(2):before {
+    content: "11:00";
+}
+
+.calendar_timeline_day:nth-child(1) .hour_cell:nth-child(3):before {
+    content: "12:00";
+}
+
+.calendar_timeline_day:nth-child(1) .hour_cell:nth-child(4):before {
+    content: "13:00";
+}
+
+.calendar_timeline_day:nth-child(1) .hour_cell:nth-child(5):before {
+    content: "14:00";
+}
+
+.calendar_timeline_day:nth-child(1) .hour_cell:nth-child(6):before {
+    content: "15:00";
+}
+
+.calendar_timeline_day:nth-child(1) .hour_cell:nth-child(7):before {
+    content: "16:00";
+}
+
+.calendar_timeline_day:nth-child(1) .hour_cell:nth-child(8):before {
+    content: "17:00";
+}
+
+.calendar_timeline_day:nth-child(1) .hour_cell:nth-child(9):before {
+    content: "18:00";
+}
+
+.calendar_timeline_day:nth-child(1) .hour_cell:nth-child(10):before {
+    content: "19:00";
+}
+
+.calendar_timeline_day:nth-child(1) .hour_cell:nth-child(11):before {
+    content: "20:00";
+}
+
+.calendar_timeline_day:nth-child(1) .hour_cell:nth-child(12):before {
+    content: "21:00";
+}
+
+.calendar_timeline_day:nth-child(1) .hour_cell:nth-child(13):before {
+    content: "22:00";
+}
+
+.calendar_timeline_day:nth-child(1) .hour_cell:nth-child(14):before {
+    content: "23:00";
+}
+
+.hour_cell.ui-selecting,
+.hour_cell.ui-selected {
+    /*background: #ffd700;*/
+    background: #1281c4;
+}
+
+.ui-selectable-helper {
+    display: none; /* убирает пунктирную линию при выделении ячеек */
+}
+
+.hour_matched {
+    background: #6CFF00;
+}
+
+.hour_matched_gold {
+    background: #ffd700;
+}
+
+.hour_cell_user {
+    display: none;
+}
+
+.interval_info {
+    display: none;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.interval_info.active {
+    display: block;
+}
+
+.interval_user_info {
+    padding: 5px 0;
+    font-size: 12px;
+    color: #fff;
+}
+
+/* /Комната */
+
+
+
+
+/* Лобби */
+.lobby {
+    height: 100%;
+    padding: 0 80px;
+    background: #E5F5FF;
+}
+
+    .lobby h1 {
+        font-size: 35px;
+        text-transform: uppercase;
+        text-align: center;
+        padding-top: 30px;
+    }
+
+.lobby_rooms_list {
+    padding-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 50px;
+}
+
+.lobby_room {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 0 50px rgba(138, 138, 138, 0.2);
+    transition: 0.4s;
+}
+
+    .lobby_room,
+    .lobby_room * {
+        cursor: pointer;
+    }
+
+.lobby_room:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 50px rgba(138, 138, 138, 0.8);
+    transition: 0.4s;
+}
+
+/*
+.lobby_room_owner_label {
+    position: absolute;
+    top: 0;
+    left: -15px;
+    background: red;
+    color: #fff;
+    font-size: 12px;
+    width: 60px;
+    height: 20px;
+    transform: rotate(-45deg);
+}
+*/
+
+
+.lobby_room_name {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px 20px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.lobby_room_date {
+    font-size: 14px;
+    text-align: center;
+    padding-top: 15px;
+}
+
+.lobby_room_members_list {
+    padding: 25px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+    /*height: 1fr;*/
+}
+
+.lobby_room_member {
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.2);
+    text-align: center;
+    /*padding-top: 5px;*/
+    overflow: hidden;
+}
+
+.lobby_room_member img {
+    padding-top: 5px;
+}
+
+.lobby_add {
+    text-align: center;
+}
+
+.lobby_add_button {
+    display: inline-block;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    min-height: 160px;
+    background: url(/images/room_add_b.png) no-repeat center;
+    background-size: contain;
+    opacity: 0.7;
+    transition: 0.3s;
+    cursor: pointer;
+}
+    .lobby_add_button:hover {
+        opacity: 1;
+        transition: 0.3s;
+    }
+
+    .lobby_add_button img {
+        height: 100%;
+        cursor: pointer;
+        opacity: 0.5;
+        transition: 0.5s;
+    }
+
+        .lobby_add_button img:hover {
+            opacity: 1;
+            transition: 0.5s;
+        }
+
+/* /Лобби */
+
+
+/* Форма создания комнаты*/
+.room_create {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+}
+
+.room_create_form {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 600px;
+    height: 400px;
+    background: #fff;
+    border-radius: 7px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+    margin: auto;
+}
+
+/* /Форма создания комнаты*/
+
+
+
+/* Модальное окно создания страницы */
+.create_room_wrap {
+    position: fixed;
+    z-index: 20;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    display: none;
+}
+.create_room_wrap.active {
+    display: table;
+}
+
+    .create_room_wrap:target {
+        display: block;
+        pointer-events: auto;
+    }
+
+.create_room_modal_wrap {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.create_room_modal {
+    width: 400px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 7px;
+    background: #fff;
+}
+
+.create_room_form {
+    padding: 20px;
+    border: 2px dashed #1281c4;
+}
+
+.create_room_label {
+    /*display: inline-block;*/
+    float: left;
+    font-size: 12px;
+    padding-bottom: 5px;
+}
+
+.create_room_input {
+    font-size: 20px;
+    padding: 5px 10px;
+    border: 1px solid #1281c4;
+    border-radius: 5px;
+    border-style: solid;
+    max-width: 100%;
+}
+
+.create_room_input:focus {
+    outline: none;
+}
+
+.input-validation-error {
+    border-color: #e80000;
+}
+
+.create_room_name {
+    padding-bottom: 10px;
+}
+
+.create_room_name_valid {
+    display: inline-block;
+    float: right;
+    font-size: 12px;
+    padding-bottom: 5px;
+    color: #e80000;
+}
+
+.create_room_input.name {
+    width: 100%;
+}
+
+/*.create_room_dates,
+.create_room_image {
+    float: left;
+    width: 50%;
+}*/
+
+.create_room_datefrom {
+    position: relative;
+    float: left;
+    width: 50%;
+    padding-bottom: 10px;
+}
+
+.create_room_dateto {
+    position: relative;
+    float: right;
+    width: 50%;
+    padding-bottom: 0;
+}
+
+    .create_room_datefrom:after,
+    .create_room_dateto:after {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        right: 15px;
+        top: 26px;
+        background: url(/images/calendar_icon.png);
+        background-size: cover;
+        content: "";
+    }
+
+    .create_room_dateto:after {
+        right: 8px;
+    }
+
+.create_room_datefrom input,
+.create_room_dateto input {
+    position: relative;
+    width: 96%;
+    /*width: 130px;*/
+}
+
+    .create_room_dateto .create_room_label {
+        margin-left: 7px;
+    }
+
+    .create_room_dateto input {
+        float: right;
+    }
+
+/* стрелки календаря */
+.ui-widget-header .ui-icon {
+    background-image: url(/images/ui-icons_444444_256x240.png) !important;
+}
+
+.create_room_date_valid {
+    font-size: 0;
+}
+
+.create_room_image {
+    text-align: center;
+    /*padding-top: 19px;*/ /*высота надписи*/
+}
+
+.room_create_image_preview {
+    width: 99px;
+    height: 99px;
+    border: 1px solid #1281c4;
+    border-radius: 50%;
+    padding: 25px;
+    margin: auto;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.create_image_preview_img {
+    width: 100%;
+    height: 100%;
+    background: url(/images/create_room_image.png) center no-repeat;
+    background-size: contain;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.room_create_image_preview:hover > div {
+    opacity: 1;
+    transition: 0.3s;
+}
+
+.room_create_image_min {
+    width: auto;
+    height: 50px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    margin: 1px;
+}
+
+    .room_create_image_min:hover {
+        background: #E5F5FF;
+        border: 2px solid rgba(0,0,0,0.2);
+    }
+
+    .room_create_image_min.focus {
+        background: #E5F5FF;
+        border: 2px solid rgba(0,0,0,0.2);
+    }
+
+.create_room_buttons {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
+}
+
+    .create_room_buttons input[type=submit],
+    .room_add_cancel {
+        position: relative;
+        width: 48%;
+        background: #1da1f2;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+        border-radius: 5px;
+        padding: 10px;
+        border: 0;
+        outline: none;
+        cursor: pointer;
+    }
+
+        .create_room_buttons input[type=submit]:hover {
+            background: #1d92f1;
+        }
+
+.create_room_loading {
+    position: absolute;
+    z-index: 2;
+    top: 26px;
+    left: 123px;
+    border: 4px solid #fff; 
+    border-top: 4px solid #7cff00; 
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: loading 1s linear infinite;
+    display: none;
+}
+
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+  
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.room_add_cancel {
+    background: #fff;
+    color: #1da1f2;
+    border: 2px solid #1da1f2;
+}
+
+/* Модальное окно создания страницы*/
+
+
+/* Модальное окно Credits */
+.credits_wrap {
+    display: none;
+    position: fixed;
+    z-index: 5;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+}
+
+    .credits_wrap.active {
+        display: table;
+    }
+
+.credits_modal_wrap {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.credits_modal {
+    position: relative;
+    width: 400px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 7px;
+    background: #fff;
+}
+
+.credits_close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: 0.4s;
+}
+
+.credits_close:hover {
+    opacity: 1;
+    transition: 0.4s;
+}
+
+.credits_list {
+    list-style: none;
+    padding: 10px 20px;
+}
+
+.credits_list li {
+    position: relative;
+    font-size: 24px;
+    padding: 5px 0;
+}
+
+    .credits_list li:before {
+        position: absolute;
+        top: 18px;
+        left: -20px;
+        width: 12px;
+        height: 2px;
+        background: #1281c4;
+        content: "";
+    }
+
+.credits_modal a {
+    font-weight: 900;
+    color: #1281c4;
+}
+/* /Модальное окно Credits */
+
+
+/* Модальное окно подтверждения записи интервалов */
+.intervals_confirm_wrap {
+    position: fixed;
+    z-index: 20;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+}
+
+.intervals_confirm_wrap.active {
+    display: table;
+}
+
+.intervals_confirm_modal_wrap {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.intervals_confirm_modal {
+    width: 550px;
+    margin: auto;
+    border-radius: 7px;
+    background: #fff;
+    padding: 40px 0;
+    text-align: center;
+    font-size: 24px;
+}
+
+@keyframes blink {
+    0% {
+        opacity: .2;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        opacity: .2;
+    }
+}
+
+.intervals_confirm_modal span {
+    animation-name: blink;
+    animation-duration: 1.4s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    padding: 0 2px;
+    font-size: 30px;
+}
+
+    .intervals_confirm_modal span:nth-child(2) {
+        animation-delay: .2s;
+    }
+
+    .intervals_confirm_modal span:nth-child(3) {
+        animation-delay: .4s;
+    }
+
+
+
+/* /Модальное окно подтверждения записи интервалов */

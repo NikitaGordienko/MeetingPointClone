@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Главная страница";
+}
+
+<main class="index">
+    <div class="container">
+        <h1>Сервис Meeting Point</h1>
+        <div class="index_cta">
+            <div class="index_cta_problem">Если у Вас есть хотя бы один друг, Вам точно знакома такая ситуация: <br />Вы хотите собраться вместе, но порой очень сложно найти тот <span class="cta_gold">"золотой"</span> час, когда все свободны.</div>
+            <div class="index_cta_help">Хватит это терпеть!</div>
+            <div class="index_cta_button"><a asp-controller="Account" asp-action="Registration">Зарегистрироваться</a></div>
+        </div>
+        <div class="index_promo">
+            <div class="promo_left">
+                <img src="/images/meetingpoint.png" alt="">
+            </div>
+            <div class="promo_right">
+                Онлайн-сервис Meeting Point* помогает в организации сбора друзей! Доступно без СМС, но с <a asp-controller="Account" asp-action="Registration">регистрацией</a>.
+                <div class="promo_right_remark">*Сайт не адаптирован под устройства с маленькими экранами</div>
+            </div>           
+        </div>
+        <div class="index_features">
+            <h2>Пользоваться очень просто:</h2>
+            <div class="carou_wrap">
+                <div class="owl-carousel owl-theme">
+                    <div class="carou_item">
+                        <div class="carou_item_action">Регистрируетесь</div>
+                        <div class="carou_item_img">
+                            <img src="/images/howto_1.jpg" />
+                        </div>
+                    </div>
+                    <div class="carou_item">
+                        <div class="carou_item_action">Создаете комнату</div>
+                        <div class="carou_item_img">
+                            <img src="/images/howto_2.jpg" />
+                        </div>
+                    </div>
+                    <div class="carou_item">
+                        <div class="carou_item_action">Зовёте друзей</div>
+                        <div class="carou_item_img">
+                            <img src="/images/howto_3.jpg" />
+                        </div>
+                    </div>
+                    <div class="carou_item">
+                        <div class="carou_item_action">Отмечаете свободные часы</div>
+                        <div class="carou_item_img">
+                            <img src="/images/howto_4.jpg" />
+                        </div>
+                    </div>
+                    <div class="carou_item">
+                        <div class="carou_item_action">Предлагаете место встречи</div>
+                        <div class="carou_item_img">
+                            <img src="/images/howto_5.jpg" />
+                        </div>
+                    </div>
+                    <div class="carou_item">
+                        <div class="carou_item_action">Смотрите совпадающие часы</div>
+                        <div class="carou_item_img">
+                            <img src="/images/howto_6.jpg" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="index_super">
+            <h2>Преимущества сервиса</h2>
+            <div class="index_super_list">
+                <div class="index_super_item">
+                    <div class="super_item_name">Бесплатный</div>
+                    <div class="super_item_img">
+                        <img src="/images/super_1.png" />
+                    </div>
+                </div>
+                <div class="index_super_item">
+                    <div class="super_item_name">Удобный</div>
+                    <div class="super_item_img">
+                        <img src="/images/super_2.png" />
+                    </div>
+                </div>
+                <div class="index_super_item">
+                    <div class="super_item_name">Быстрый</div>
+                    <div class="super_item_img">
+                        <img src="/images/super_3.png" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- container -->
+
+</main>
